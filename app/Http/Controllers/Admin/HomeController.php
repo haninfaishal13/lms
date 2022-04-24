@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Grade;
+use App\Models\GradeCluster;
 use App\Models\Lesson;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data['grade'] = Grade::all();
+        $data['grade'] = GradeCluster::with('grade')->get();
         $data['student'] = User::where('role', 'student')->get();
         $data['teacher'] = User::where('role', 'teacher')->get();
         $data['lesson'] = Lesson::all();

@@ -29,8 +29,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function user_grade()
+    public function user_study()
     {
-        return $this->hasMany(UserGrade::class, 'user_id', 'id');
+        return $this->hasMany(UserStudy::class, 'user_id', 'id');
+    }
+
+    public function user_teacher()
+    {
+        return $this->hasMany(UserTeach::class, 'user_id', 'id');
+    }
+
+    public function change_role()
+    {
+        return $this->hasMany(UserChangeRole::class, 'user_id', 'id');
     }
 }

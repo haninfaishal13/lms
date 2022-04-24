@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\GuruController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\KelasController;
+use App\Http\Controllers\Admin\PelajaranController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Student\HomeController as StudentHomeController;
@@ -43,9 +44,20 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::put('{id}', [KelasController::class, 'update'])->name('admin.kelas.update');
                 Route::delete('{id}', [KelasController::class, 'destroy'])->name('admin.kelas.delete');
             });
+
+            Route::group(['prefix' => 'pelajaran'], function() {
+                Route::get('daftar', [PelajaranController::class, 'index'])->name('admin.pelajaran');
+                Route::get('{id}', [PelajaranController::class, 'show'])->name('admin.pelajaran.show');
+                Route::post('', [PelajaranController::class, 'store'])->name('admin.pelajaran.tambah');
+
+                Route::post('pelajaran-tingkat-jurusan', [PelajaranController::class, 'store_lesson_grade_major'])->name('admin.pelajaran-grade-major.tambah');
+            });
+
             
             Route::get('dt-kelas', [KelasController::class, 'dt_index'])->name('admin.dt-kelas');
             Route::get('dt-kelas/permintaan', [KelasController::class, 'dt_permintaan'])->name('admin.dt-kelas.permintaan');
+            Route::get('dt-pelajaran', [PelajaranController::class, 'dt_index'])->name('admin.dt-pelajaran');
+            Route::get('dt-pelajaran/{id}', [PelajaranController::class, 'dt_show'])->name('admin.dt-pelajaran-show');
             
 
             Route::group(['prefix' => 'guru'], function() {

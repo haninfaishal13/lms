@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Grade;
-use App\Models\GradeLevel;
+use App\Models\GradeCluster;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -17,16 +17,10 @@ class KelasController extends Controller
      */
     public function dt_index()
     {
-        $model = Grade::where('status', '1')->get();
+        $model = GradeCluster::where('status', '1')->get();
         $dTable = DataTables()->of($model)->addIndexColumn()
             ->editColumn('name', function($data) {
-                return $data->name;
-            })
-            ->editColumn('description', function($data){
-                return $data->description;
-            })
-            ->editColumn('level', function($data) {
-                return $data->level->level;
+                return $data->grade->name.'-'.$data->name;
             })
             ->addColumn('action', function($data) {
                 $btn = '';
@@ -81,7 +75,7 @@ class KelasController extends Controller
     
     public function grade_level()
     {
-        $level = GradeLevel::select('id','level')->get();
+        $level = Grade::select('id','name')->get();
         return response()->json($level);
     }
 

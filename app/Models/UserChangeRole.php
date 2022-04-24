@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Lesson extends Model
+class UserChangeRole extends Model
 {
     use HasFactory;
 
-    protected $table = 'lessons';
+    protected $table = 'user_change_roles';
     protected $guarded = [];
 
-    public function lesson_grade_major() 
+    public function user()
     {
-        return $this->hasMany(LessonGradeMajor::class, 'lesson_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
 }

@@ -76,7 +76,6 @@
         <thead>
             <th style="width: 1%;">No</th>
             <th style="width:13%">Nama</th>
-            <th style="width:13%">Level</th>
             <th>Deskripsi</th>
             <th style="width: 13%;">Action</th>
         </thead>
@@ -93,11 +92,11 @@
     var table = $('#table-kelas').DataTable({
         processing:true,
         serverSide:true,
+        ordering:true,
         ajax:"{{route('admin.dt-kelas')}}",
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex' },
             { data:'name', name:'name' },
-            { data:'level', name: 'level' },
             { data:'description', render: function(data, type, row) {
                 if(data == null) {
                     var html = `-`;
@@ -130,8 +129,8 @@
             var option = `<option value="0">Default select</option>`
             var option_edit = ``;
             $.each(data, function(index, value) {
-                option += `<option value="`+value.id+`">`+value.level+`</option>`
-                option_edit += `<option class="option-edit-kelas" value="`+value.id+`">`+value.level+`</option>`
+                option += `<option value="`+value.id+`">`+value.name+`</option>`
+                option_edit += `<option class="option-edit-kelas" value="`+value.id+`">`+value.name+`</option>`
             });
             $('#tambah-kelas-tingkat').html(option);
             $('#edit-kelas-tingkat').html(option_edit);

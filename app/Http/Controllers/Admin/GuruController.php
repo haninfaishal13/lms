@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserTeach;
+use Exception;
 use Illuminate\Http\Request;
 
 class GuruController extends Controller
@@ -50,11 +52,7 @@ class GuruController extends Controller
         return $dTable->make(true);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
@@ -114,5 +112,80 @@ class GuruController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function index_assign_guru($username)
+    {
+        $data['user'] = User::with('user_teach')->where('username', $username)->first();
+        // $data['user_teach'] = $data['user']->user_teach
+    }
+    
+    public function assign_guru(Request $request)
+    {
+        $user_id = $request->user_id;
+        $lesson_id = $request->lesson_grade_major_id;
+        try {
+            UserTeach::create([
+                'user_id' => $user_id,
+                'lesson_id' => $lesson_id,
+                'start_date' => date('Y-m-d H:i:s'),
+            ]);
+
+            return response()->json([
+                'title' => 'Sukses',
+                'message' => 'Berhasil menempatkan Guru',
+                'type' => 'success'
+            ]);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'title' => 'Gagal',
+                'message' => 'Gagal menempatkan Guru',
+                'type' => 'error'
+            ]);
+        }
+    }
+
+    public function update_status_assign_guru(Request $request)
+    {
+        $userteach_id = $request->id;
+        try{
+            UserTeach::where('id', $userteach_id)->update([
+                'status' => '1',
+            ]);
+            return response()->json([
+                'title' => 'Sukses',
+                'message' => 'Berhasil update status penempatan Guru',
+                'type' => 'success'
+            ]);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'title' => 'Gagal',
+                'message' => 'Gagal update penempatkan Guru',
+                'type' => 'error'
+            ]);
+        }
+    }
+
+    public function delete_assign_guru(Request $request)
+    {
+        $userteach_id = $request->id;
+        try{
+            UserTeach::where('id', $userteach_id)->delete();
+            return response()->json([
+                'title' => 'Sukses',
+                'message' => 'Berhasil menempatkan Guru',
+                'type' => 'success'
+            ]);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'type' => 'error',
+                'message' => 'Gagal menghapus penempatan guru',
+                'title' => 'Gagal'
+            ]);
+        }
+        
     }
 }

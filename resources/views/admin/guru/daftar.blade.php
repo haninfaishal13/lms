@@ -22,7 +22,7 @@
             <thead>
                 <th style="width: 1%;">No</th>
                 <th>Nama</th>
-                <th>Mata Pelajaran</th>
+                <!-- <th>Mata Pelajaran</th> -->
                 <th style="width: 13%;">Action</th>
             </thead>
             <tbody>

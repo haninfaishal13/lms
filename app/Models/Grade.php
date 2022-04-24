@@ -12,13 +12,13 @@ class Grade extends Model
     protected $table = 'grades';
     protected $guarded = [];
 
-    public function grade_user()
+    public function lesson()
     {
-        return $this->hasMany(UserGrade::class, 'grade_id', 'id');
+        return $this->hasMany(Lesson::class, 'lesson_id', 'id');
     }
 
-    public function level() 
+    public function grade_cluster()
     {
-        return $this->belongsTo(GradeLevel::class, 'grade_level_id', 'id');
+        return $this->hasMany(GradeCluster::class, 'grade_id', 'id');
     }
 }
