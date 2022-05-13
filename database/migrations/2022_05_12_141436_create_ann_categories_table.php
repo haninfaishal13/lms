@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserTeachesTable extends Migration
+class CreateAnnCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateUserTeachesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_teaches', function (Blueprint $table) {
+        Schema::create('ann_categories', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned();
-            $table->tinyInteger('status')->default(0);
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
+            $table->string('name');
+            $table->tinyInteger('status');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateUserTeachesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_teaches');
+        Schema::dropIfExists('ann_categories');
     }
 }

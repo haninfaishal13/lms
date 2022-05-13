@@ -11,36 +11,17 @@
 @section('content-admin')
 
 <div class="modal fade" id="tambah-pelajaran" tabindex="-1" role="dialog" aria-labelledby="tambah-pelajaran" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Sub Pelajaran</h5>
+                <h5 class="modal-title" id="pengumuman-title">Detail Pengumuman</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action=""></form>
             <div class="modal-body">
-                Nama Sub Pelajaran:
-                <input type="text" name="nama" id="tambah-pelajaran-nama" class="form-control mb-2" placeholder="Input nama kelas">
-                Nama Pelajaran:
-                <select name="lesson_id" class="form-control" id="tambah-pelajaran-pelajaran">
-                    <option value="{{$lesson->id}}">{{$lesson->name}}</option>
-                </select>
-                Tingkat:
-                <select name="grade_id" class="form-control" id="tambah-pelajaran-tingkat">
-                    @foreach($grade as $grad)
-                        <option value="{{ $grad->id }}">{{$grad->name}}</option>
-                    @endforeach
-                </select>
-                Major:
-                <select name="major_id" class="form-control" id="tambah-pelajaran-jurusan">
-                    @foreach($major as $maj)
-                        <option value="{{$maj->id}}">{{$maj->name}}</option>
-                    @endforeach
-                </select>
-                Deskripsi:
-                <textarea name="description" class="form-control" id="tambah-pelajaran-deskripsi" cols="30" rows="10"></textarea>
+                <img alt="" id="pengumuan-header">
+                <div id="pengumuman-text"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -60,10 +41,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                Nama Kelas:
+                Nama Pelajaran:
                 <input type="text" name="nama" id="edit-pelajaran-nama" class="form-control mb-2" placeholder="Input nama kelas">
-                Tingkat:
-                <select name="level" class="form-control" id="edit-pelajaran-tingkat"></select>
                 Deskripsi:
                 <textarea name="deskripsi" id="edit-pelajaran-deskripsi" cols="30" rows="10" class="form-control" placeholder="Input deskripsi"></textarea>
             </div>
@@ -79,7 +58,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">{{$lesson->name}}</h1>
+                <h1 class="m-0">Daftar Pelajaran</h1>
             </div>
         </div>
     </div>
@@ -88,14 +67,14 @@
 
 <section class="content">
     <div class="container-fluid">
-        <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#tambah-pelajaran"><i class="fas fa-plus mr-1"></i>Tambah Sub Pelajaran</button>
+        <a href="{{route('admin.pengumuman.create')}}" class="btn btn-primary mb-3"><i class="fas fa-plus mr-1"></i>Tambah Pelajaran</a>
         <table class="table table-bordered table-striped text-center d-none d-lg-table" id="tabel-pelajaran">
             <thead>
                 <th style="width: 1%;">No</th>
-                <th>Nama</th>
-                <th>Tingkat</th>
-                <th>Jurusan</th>
-                <th style="width: 30%">Deskripsi</th>
+                <th>Pengirim</th>
+                <th>Kategori</th>
+                <th>Judul</th>
+                <th>Header</th>
                 <th style="width: 13%;">Action</th>
             </thead>
             <tbody>
@@ -114,37 +93,53 @@
             processing:true,
             serverSide:true,
             ordering:true,
-            ajax:"{{route('admin.dt-pelajaran-show', $lesson->id)}}",
+            ajax:"{{route('admin.dt-pengumuman-daftar')}}",
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                 { data:'name', name:'name' },
-                { data:'grade', name:'grade' },
-                { data:'major', name:'major' },
-                { data:'description', name:'description' },
+                { data:'category', name:'category' },
+                { data:'title', name:'title' },
+                { data:'header', render: function(data, type, row) {
+                    let html = `<img src="{{asset('storage/`+data+`')}}" style="max-width:100%">`;
+                    return html;
+                }},
                 { data:'action', name: 'action' }
             ],
         });
 
-        $('#tambah').on('click', function() {
-            var lesson_id = $('#tambah-pelajaran-pelajaran').val();
-            var grade_id = $('#tambah-pelajaran-tingkat').val();
-            var major_id = $('#tambah-pelajaran-jurusan').val();
-            var name = $('#tambah-pelajaran-nama').val();
-            var description = $('#tambah-pelajaran-deskripsi').val();
-            $.post("{{route('admin.pelajaran-grade-major.tambah')}}", {
-                lesson_id: lesson_id,
-                grade_id: grade_id,
-                major_id: major_id,
-                name: name,
-            }, function(data) {
-                $('#tambah-pelajaran').modal('hide');
-                Swal.fire(
-                    data.title,
-                    data.message,
-                    data.type
-                );
-                table.ajax.reload()
+        function detailpengumuman(id) {
+            let url = "{{route('admin.pengumuman.show', 'pengumuman_id')}}";
+            url = url.replace(/pengumuman_id/g, id);
+
+            $.get(url, function(data) {
+                $('#pengumuman-title').html(data.title);
+                $('#pengumuman-header').attr('src', data.header);
+                $('#pengumuman-text').html(data.text);
             })
-        })
+        }
+
+        function deletepengumuman(id) {
+            Swal.fire({
+                title: 'Kamu yakin?',
+                text: "Data akan dihapus secara permanen",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Batal'
+            }).then(function (willDelete) {
+                if(willDelete.value) {
+                    let url = "{{route('admin.pengumuman.delete', 'pengumuman_id')}}";
+                    url = url.replace(/pengumuman_id/g, id);
+                    $.post(url, {
+                        _method: 'delete',
+                    },function(data) {
+                        Swal.fire(data.title, data.message, data.type);
+                        table.ajax.reload();
+                    });
+                }
+            })
+        }
     </script>
 @endsection

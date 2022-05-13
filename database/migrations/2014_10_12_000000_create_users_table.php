@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('role')->default('public');
             $table->text('address')->nullable();
+            $table->tinyInteger('status_assign')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

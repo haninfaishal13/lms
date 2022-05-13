@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             MajorSeeder::class,
             GradeClusterSeeder::class,
             LessonSeeder::class,
-
+            LessonGradeMajorSeeder::class,
+            AnnCategorySeeder::class,
         ]);
     }
 }
