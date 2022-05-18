@@ -16,7 +16,7 @@ class CreateUserTeachLessonsTable extends Migration
         Schema::create('user_teach_lessons', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('lesson_grade_major_id')->unsigned();
-            $table->bigInteger('user_teacher_id')->unsigned();
+            $table->bigInteger('user_teach_id')->unsigned();
             $table->date('start_time')->nullable();
             $table->date('end_time')->nullable();
             $table->timestamps();

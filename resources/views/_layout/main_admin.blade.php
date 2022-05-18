@@ -211,7 +211,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{route('admin.guru.permintaan')}}" class="nav-link">
-                            <i class="fas fa-user-check nav-icon"></i>
+                                <i class="fas fa-user-clock nav-icon"></i>
                                 <p>Permintaan Guru</p>
                             </a>
                         </li>
@@ -230,8 +230,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('admin.guru.permintaan')}}" class="nav-link">
-                            <i class="fas fa-user-check nav-icon"></i>
+                            <a href="{{route('admin.siswa.permintaan')}}" class="nav-link">
+                                <i class="fas fa-user-clock nav-icon"></i>
                                 <p>Permintaan Siswa</p>
                             </a>
                         </li>
@@ -239,19 +239,19 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link {{(Request::is('admin/siswa')) ? 'active' :''}}">
-                        <i class="fas fa-graduation-cap nav-icon mr-2"></i>
+                        <i class="fas fa-scroll nav-icon mr-2"></i>
                         <p>Pengumuman</p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route('admin.pengumuman.daftar')}}" class="nav-link">
-                            <i class="fas fa-user nav-icon"></i>
+                            <i class="fas fa-clipboard nav-icon"></i>
                                 <p>Daftar</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('admin.pengumuman.pengajuan')}}" class="nav-link">
-                            <i class="fas fa-user-check nav-icon"></i>
+                                <i class="fas fa-notes-medical nav-icon"></i>
                                 <p>Pengajuan</p>
                             </a>
                         </li>

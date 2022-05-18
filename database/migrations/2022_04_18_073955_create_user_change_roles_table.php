@@ -18,7 +18,7 @@ class CreateUserChangeRolesTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->string('role_previous');
             $table->string('role_request');
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }

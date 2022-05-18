@@ -20,6 +20,9 @@ class UserSeeder extends Seeder
                 'name' => 'Administrator',
                 'email' => 'admin@lms.com',
                 'password' => bcrypt('admin1234'),
+                'religion' => 'Islam',
+                'gender' => 1,
+                'address' => 'Jakarta, Indonesia',
                 'role' => 'admin',
             ],
             [
@@ -27,6 +30,9 @@ class UserSeeder extends Seeder
                 'name' => 'Dona Wariska',
                 'email' => 'donawariska@smaperjuangan.sch.id',
                 'password' => bcrypt('123456'),
+                'religion' => 'Islam',
+                'gender' => 1,
+                'address' => 'Jakarta, Indonesia',
                 'role' => 'teacher',
             ],
             [
@@ -34,12 +40,15 @@ class UserSeeder extends Seeder
                 'name' => 'Aurum Nur Fadhillah',
                 'email' => 'aurumnf@student.com',
                 'password' => bcrypt('hidupmulia13'),
+                'religion' => 'Islam',
+                'gender' => 1,
+                'address' => 'Jakarta, Indonesia',
                 'role' => 'student',
             ],
         ];
 
         foreach($user as $key => $value) {
-            User::create($value); 
+            User::create($value);
         }
     }
 }

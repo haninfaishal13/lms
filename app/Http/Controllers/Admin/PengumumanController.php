@@ -45,17 +45,19 @@ class PengumumanController extends Controller
                 'status_send' => 1,
                 'status_approve' => 1,
             ])->id;
-
-            foreach($request->media as $media) {
-                $mname = str_replace(' ', '_', $media->getClientOriginalName());
-                $media_name = time().'-'.$mname;
-                AnnMedia::create([
-                    'announcement_id' => $announcement_id,
-                    'path' => $media->storeAs(
-                        'assets/announcement/media', $media_name, 'public'
-                    ),
-                ]);
+            if(!$request->mediaisEmpty()) {
+                foreach($request->media as $media) {
+                    $mname = str_replace(' ', '_', $media->getClientOriginalName());
+                    $media_name = time().'-'.$mname;
+                    AnnMedia::create([
+                        'announcement_id' => $announcement_id,
+                        'path' => $media->storeAs(
+                            'assets/announcement/media', $media_name, 'public'
+                        ),
+                    ]);
+                }
             }
+
             return response()->json([
                 'title' => 'Sukses',
                 'message' => 'Berhasil menambah pengumuman',
@@ -103,7 +105,7 @@ class PengumumanController extends Controller
                     $media->delete();
                 }
             }
-            
+
             $header_file = Storage::disk('public')->path($announcement->header);
             File::delete($header_file);
             $announcement->delete();

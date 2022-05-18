@@ -20,12 +20,13 @@ class CekLogin
         if(!Auth::check()) {
             return redirect('/');
         }
-        
+
+        $arr_role = explode("|", $role);
         $user = Auth::user();
-        if($user->role == $role) {
+        if(in_array($user->role, $arr_role)) {
             return $next($request);
         }
-        
-        return redirect('/')->with('error', 'Kamu tidak punya akses');
+
+        return redirect('/')->with('auth_error', 'Kamu tidak punya akses');
     }
 }

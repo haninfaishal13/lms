@@ -15,6 +15,12 @@
         </div>
         <div class="col-sm-4">
             <div class="py-5 pt-5">
+                @if (session('auth_error'))
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert"><i class="fas fa-times"></i></button>
+                    {!! session('auth_error') !!}
+                </div>
+                @endif
                 <div class="card">
                     <div class="card-header">
                         <h5>Login</h5>

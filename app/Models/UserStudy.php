@@ -22,7 +22,7 @@ class UserStudy extends Model
         return $this->belongsTo(Major::class, 'major_id', 'id');
     }
 
-    public function user() 
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }

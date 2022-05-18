@@ -124,7 +124,7 @@
                     $('#show-header').attr("src",this.result);
                 }
             }
-        })
+        });
         var collectionFiles = [];
         $('#media').on('change', function(event) {
             var currentFiles = [];
@@ -146,6 +146,16 @@
                 $('#'+id).remove();
             });
         });
+
+        $('#cancel-announcement').on('click', function() {
+            $('#title').val('');
+            $('#header').val('');
+            $('#show-header').attr('src', '');
+            $('#category').val('').trigger('change');
+            $('#text').val('');
+            $('#media').val('');
+            collectionFiles = [];
+        })
 
         $('#submit-announcement').on('click', function() {
             var formData = new FormData();

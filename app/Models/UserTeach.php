@@ -16,4 +16,9 @@ class UserTeach extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function user_teach_lesson()
+    {
+        return $this->hasMany(UserTeachLesson::class, 'user_teach_id', 'id');
+    }
 }

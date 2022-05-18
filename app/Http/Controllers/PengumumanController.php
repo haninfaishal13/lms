@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
 use Illuminate\Http\Request;
 
 class PengumumanController extends Controller
@@ -13,7 +14,16 @@ class PengumumanController extends Controller
      */
     public function index()
     {
-        //
+        $announcements = Announcement::orderBy('created_at', 'desc')->get();
+    }
+
+    public static function user_index()
+    {
+        $announcements = Announcement::orderBy('created_at', 'desc')->where([
+            'status_send' => 1,
+            'status_approve' => 1,
+        ])->get();
+        return $announcements;
     }
 
     /**
